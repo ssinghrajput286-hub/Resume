@@ -29,6 +29,11 @@ jobs:
       - name: Copy fonts and PDF libraries into www
         run: node prep.js
 
+      - name: Copy index.html into www
+        run: |
+          mkdir -p www
+          cp index.html www/
+
       - name: Add Android platform
         run: npx cap add android
 
@@ -36,7 +41,7 @@ jobs:
         continue-on-error: true
         run: |
           pip install pillow
-          python scripts/make_icons.py
+          python make_icons.py
           npx capacitor-assets generate --android
 
       - name: Sync web files into Android project
