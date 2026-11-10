@@ -1,0 +1,27 @@
+{
+  "name": "resume-lele-re",
+  "version": "2.0.0",
+  "private": true,
+  "dependencies": {
+    "@capacitor/android": "^6.1.0",
+    "@capacitor/app": "^6.0.0",
+    "@capacitor/cli": "^6.1.0",
+    "@capacitor/core": "^6.1.0",
+    "@capacitor/filesystem": "^6.0.0",
+    "@capacitor/share": "^6.0.0",
+    "@fontsource/bebas-neue": "^5.0.0",
+    "@fontsource/dm-serif-display": "^5.0.0",
+    "@fontsource/jetbrains-mono": "^5.0.0",
+    "@fontsource/lora": "^5.0.0",
+    "@fontsource/montserrat": "^5.0.0",
+    "@fontsource/outfit": "^5.0.0",
+    "@fontsource/playfair-display": "^5.0.0",
+    "@fontsource/poppins": "^5.0.0",
+    "@fontsource/space-grotesk": "^5.0.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5"
+  }
+}
