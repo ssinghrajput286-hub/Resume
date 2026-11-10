@@ -1,0 +1,62 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Copy fonts and PDF libraries into www
+        run: node scripts/prep.js
+
+      - name: Add Android platform
+        run: npx cap add android
+
+      - name: Generate app icon and splash (optional)
+        continue-on-error: true
+        run: |
+          pip install pillow
+          python scripts/make_icons.py
+          npx capacitor-assets generate --android
+
+      - name: Sync web files into Android project
+        run: npx cap sync android
+
+      - name: Build debug APK
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload APK as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Resume-Lele-Re-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Publish APK to Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ github.run_number }}
+          name: Resume Lele Re v${{ github.run_number }}
+          files: android/app/build/outputs/apk/debug/app-debug.apk
